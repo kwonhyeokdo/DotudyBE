@@ -1,0 +1,13 @@
+spring:
+    datasource:
+        driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+        url: jdbc:log4jdbc:mysql://localhost:3306/dotudy?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul
+        username: dotudy
+        password: kIDv62NSRVMt@uNYDXue
+
+mybatis:
+    mapper-locations: classpath:sql/**/*.xml
+    type-aliases-package: com.dotudy.dotudy_be
+
+logging:
+    config: classpath:log4j2.yml

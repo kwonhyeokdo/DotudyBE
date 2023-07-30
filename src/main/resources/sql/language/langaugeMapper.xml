@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dotudy.dotudy_be.language.repository.LanguageRepository">
+
+    <select
+        id="test"
+        resultType="com.dotudy.dotudy_be.language.dto.SelectLanguageDto"
+    >
+        /* com.dotudy.dotudy_be.language.repository.LanguageRepository.selectLanguage */
+             SELECT lc.code AS code
+                  , lv.country_code AS countryCode
+                  , lv.value AS value
+               FROM language_code lc
+         INNER JOIN language_value lv
+                 ON lc.id = lv.id
+                AND lv.expire_datetime = '9999-12-31 23:59:59'
+              WHERE 1=1
+                AND lc.code = #{code}
+                AND lc.expire_datetime = '9999-12-31 23:59:59'
+                AND lc.use_type = #{useType}
+    </select>
+
+</mapper>
