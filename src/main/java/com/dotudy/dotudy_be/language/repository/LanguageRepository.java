@@ -1,6 +1,7 @@
 package com.dotudy.dotudy_be.language.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -12,7 +13,14 @@ import com.dotudy.dotudy_be.language.entity.LanguageCodeVo;
 public interface LanguageRepository {
     @Select(
         """
-        <script>
+        /* aaaa */
+                Select 10
+        """
+    )
+    public String aaaa();
+
+    @Select(
+        """
         /* com.dotudy.dotudy_be.language.repository.LanguageRepository.selectLanguage() */
                 SELECT lc.code          AS code
                      , lv.country_code  AS countryCode
@@ -22,14 +30,24 @@ public interface LanguageRepository {
                     ON lc.id = lv.id
                    AND lv.expire_datetime = '9999-12-31 23:59:59'
                  WHERE 1=1
-                   AND lc.code IN
-                   <foreach item='item' collection='codeList' open='(' close=')' separator=",">
-                        #{item}
-                   </foreach>
                    AND lc.expire_datetime = '9999-12-31 23:59:59'
-        </script>
         """
     )
-    public List<SelectLanguageDto> selectLanguage(LanguageCodeVo languageCodeVo);
-    public List<SelectLanguageDto> test(LanguageCodeVo languageCodeVo);
+    public List<SelectLanguageDto> selectLanguage();
+
+    @Select(
+        """
+        /* com.dotudy.dotudy_be.language.repository.LanguageRepository.selectLanguage2() */
+           SELECT lc.code AS code
+                , lv.value AS value
+             FROM language_code lc
+       INNER JOIN language_value lv
+               ON lc.id = lv.id
+              AND lv.expire_datetime = '9999-12-31 23:59:59'
+            WHERE 1=1
+              AND lv.country_code = #{countryCode}
+              AND lc.expire_datetime = '9999-12-31 23:59:59'  
+        """
+    )
+    public Map<String, String> selectLanguage2(String countryCode);
 }

@@ -1,9 +1,11 @@
 package com.dotudy.dotudy_be.language.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,25 +21,32 @@ public class LanguageController {
     @Autowired
     LanguageService languageService;
 
-    @PostMapping("/postlanguage")
-    public ResponseEntity<List<SelectLanguageDto>> selectLanguage(
-        @RequestBody LanguageCodeVo languageCodeVo
-    ) {
-        System.out.println("languageCodeVo: " + languageCodeVo);
-
-        return ResponseEntity.ok().body(languageService.selectLanguage(languageCodeVo));
+    @GetMapping("/aaaa")
+    public String aaaa() {
+        return languageService.aaaa();
     }
 
     @GetMapping("/language")
-    public ResponseEntity<List<SelectLanguageDto>> selectLanguage(
-        @RequestParam List<String> codeList
-    ) {
-        System.out.println("codeList: " + codeList);
-        LanguageCodeVo languageCodeVo = LanguageCodeVo
-                                       .builder()
-                                       .codeList(codeList)
-                                       .build();
+    public ResponseEntity<Map<String, Map<String, String>>> selectLanguage() {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        var result = languageService.selectLanguage();
+        System.out.println("==================");
+        stopWatch.stop();
+        System.out.println("selectLanguage: " + stopWatch.prettyPrint());
+        System.out.println("==================");
+        return ResponseEntity.ok().body(result);
+    }
 
-        return ResponseEntity.ok().body(languageService.selectLanguage(languageCodeVo));
+    @GetMapping("/language2")
+    public ResponseEntity<Map<String, Map<String, String>>> selectLanguage2() {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        var result = languageService.selectLanguage2();
+        System.out.println("==================");
+        stopWatch.stop();
+        System.out.println("selectLanguage2: " + stopWatch.prettyPrint());
+        System.out.println("==================");
+        return ResponseEntity.ok().body(result);
     }
 }
